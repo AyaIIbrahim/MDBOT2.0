@@ -1,0 +1,116 @@
+main {
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 3px 0 rgba(123,139,165,0.2);
+  width:1400px;
+  margin: auto;
+  margin-bottom: 32px;
+}
+
+h2 {
+padding: 20px 0px;
+text-align: center;
+}
+
+.card-row {
+display: flex;
+flex-flow: row wrap;
+justify-content: space-evenly;
+margin:  0px 10px;
+}
+
+.card {
+width: 300px;
+margin: 10px;
+margin-bottom: 30px;
+border: 1px solid #d7d7d7;
+border-radius: 20px;
+background-color: white;
+
+ /* offset-x | offset-y | blur-radius | spread-radius | color */
+-webkit-box-shadow: -2px -1px 15px 7px rgba(0,0,0,0.5);
+-moz-box-shadow: -3px -2px 30px 14px rgba(0,0,0,0.425);
+box-shadow: -4px -3px 45px 21px rgba(0,0,0,0.20);
+
+}
+.card p{
+  padding: 20px
+}
+.card h3{
+  padding-left: 20px
+}
+.card:hover {
+box-shadow: 21px 4px 8px 0 rgba(0,0,0,0.15);
+}
+.card > img {
+border-radius: 2px;
+max-width: 100%;
+margin-bottom: 10px;
+height: auto;
+border-radius:7px
+}
+
+.card h3 {
+color: purple;
+}
+
+.card p {
+color: #757575;
+line-height: 1.5;
+padding-top: 10px;
+}
+.contain {
+	margin-top: 10%;
+}
+
+.uploadOuter {
+	text-align: center;
+	padding: 20px;
+	color: white;
+
+}
+
+strong {
+		padding: 0 10px;
+	}
+.dragBox {
+	width: 250px;
+	height: 100px;
+	position: relative;
+	text-align: center;
+	font-weight: bold;
+	line-height: 95px;
+	color: #999;
+	border: 2px dashed #ccc;
+	display: inline-block;
+	transition: transform 0.3s;
+
+}
+input[type="file"] {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		opacity: 0;
+		top: 0;
+		left: 0;
+	}
+  input[type="submit"] {
+    display: block;
+    margin: 35px auto;
+    background: #00a1c7;
+    border: unset;
+    color: #fff;
+    padding: 13px 72px;
+    font-size: 16px;
+    transition: all 0.7s;
+  	}
+.draging {
+	transform: scale(1.1);
+}
+#preview {
+	text-align: center;
+
+}

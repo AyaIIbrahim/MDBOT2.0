@@ -1,0 +1,332 @@
+{% extends "layout.html" %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dent.css') }}">
+    <script src="{{ url_for('static', filename='js/dent.js') }}"></script>
+</head>
+
+<ul class="breadcrumb">
+    <li class="active"><a href="/home">Home</a></li>
+    <li class="active"><a href="/medicalDomain">choose</a></li>
+    <li class="active"><a href="/dent">dentistry</a></li>
+    <li class="inactive">Symptoms</li>
+    <li class="inactive">Result</li>
+</ul>
+
+<div class="dent">
+
+<main>
+<div class="contain ">
+  <form class="box" method="post" action="" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="uploadOuter">
+			<span class="dragBox">
+				Drag and Drop Image here
+        <input type="file" accept="image/*"  name="file" id="file"  onChange="dragNdrop(event)" ondragover="drag()" ondrop="drop()" id="uploadFile" >
+			</span>
+			</div>
+			<div id="preview"></div>
+		</div>
+	</div>
+</div>
+
+<input type="submit" value="Upload">
+<h2>your teeth is: {{prediction}}</h2>
+
+
+<button class="btn btn-primary">
+<a href="/booking">حابب تحجز ميعاد مع دكتور؟</a>
+</button>
+
+</main>
+
+<main>
+  <h2>شايف سنانك؟ </h2>
+
+  <section class="card-row">
+    <a href="/booking">
+    <article class="card">
+      <img src="{{ url_for('static', filename='images/caries-toothiq-384.jpg') }}">
+      <h3>تسوس الأسنان العادية</h3>
+      <p>
+       <ul>
+          <li>ألام في الأسنان</li>
+          <li>تجويف بني ظاهر على السطح </li>
+          <li>ألام وقت الاكل</li>
+          <li>حساسية الأسنان</li>
+       </ul>
+      </p>
+    </article>
+    </a>
+    <div class="card-blur"></div>
+    <a href="/booking">
+    <article class="card">
+      <img <img loading="lazy" src="{{ url_for('static', filename='images/recurrent-caries-toothiq-384.jpg') }}">
+      <h3>تسوس الأسنان المـُرمـَمة</h3>
+      <p>
+          <ul>
+          <li>مشاكل حادة في المضغ</li>
+          <li> قيح حول السن وبوادر خُراج </li>
+          <li> تخلخل التاج أو سقوطه</li>
+          <li>انتفاخ اللثة أو الفك حول السن</li>
+          </ul>
+    </p>
+     </article>
+     </a>
+     <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/bruxism-toothiq-384.jpg') }}">
+      <h3>الجز على الأسنان</h3>
+      <p>
+          <ul>
+          <li>تَّرَدِّي في الأسنان وظهور طبقات أعمق</li>
+          <li> وجع في الفك أو الوش أو الرقبة </li>
+          <li>ألام يبان مصدرها اﻷذن</li>
+          <li>صداع مستمر</li>
+          </ul>
+      </p>
+       </article>
+       </a>
+       <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/attrition-toothiq-384.jpg') }}">
+      <h3>تآكل الأسنان</h3>
+      <p>
+          <ul>
+          <li>شكل الأسنان الخارجي متغير وضعيف</li>
+          <li>  ألام في منطقة الوجه والفكين </li>
+          <li>حساسية ملحوظة خصوصا وقت شرب أو اكل  حاجات باردة أو ساخنة</li>
+          </ul>
+      </p>
+    </article>
+    </a>
+  </section>
+
+  <section class="card-row">
+    <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/sensitive-teeth-toothiq-384.jpg') }}" >
+      <h3>حساسية الأسنان</h3>
+       <p>
+          <ul>
+          <li>حسّاسية مفرطة وقت الاكل أو الشرب للمنتجات الحمضية, أو حتى لمس الأسنان </li>
+          <li> آلام وقت التنفس من الفم لان طبقة العاج مكشوفة </li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/chipped-teeth-toothiq-384.jpg') }}">
+      <h3>أسنان مكسورة</h3>
+        <p>
+          <ul>
+          <li>كسر أو شقوق واضحة في السن </li>
+          <li>تورم اللثة </li>
+          <li>ألام غير منتظمة الحدوث في السن</li>
+          <li>صعوبة الأكل على السن المكسورة</li>
+          </ul>
+      </p>
+       </article>
+       </a>
+       <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/gingivitis-toothiq-384.jpg') }}">
+      <h3>إلتهاب اللثة</h3>
+       <p>
+          <ul>
+          <li>لثة متورمة أو منتفخة وضعيفة</li>
+          <li>تكرار نزيف اللثة وقت غسل السنان</li>
+          <li>تغير الملمس والشكل العام للثة وجفاف الفم وريحة فم سيئة</li>
+          </ul>
+      </p>
+       </article>
+       </a>
+       <a href="/booking">
+    <article class="card">
+      <img loading="lazy"  src="{{ url_for('static', filename='images/irreversible-pulpitis-toothiq-384.jpg') }}">
+      <h3>إلتهاب لـُب الأسنان</h3>
+       <p>
+          <ul>
+          <li>ألام في السنان دائمة وبتزيد وقت اكل أو شرب حاجات باردة أو ساخنة</li>
+          <li>صديد من جيوب اللثة ونزيف اللثة وتورم عظام الفك </li>
+          </ul>
+      </p>
+      </article>
+      </a>
+       </section>
+<!---------->
+  <section class="card-row">
+    <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/secondary-occlusal-trauma-toothiq-384.jpg') }}"  >
+      <h3>سوء إطباق الأسنان</h3>
+        <p>
+          <ul>
+          <li>الأسنان مش في محاذاة بعضها</li>
+          <li>تكرار عض الخدين من جوا او اللسان </li>
+           <li>عملية المضغ مش مريحة</li>
+          <li> التنفس عن طريق الفم بدلاً من الأنف </li>
+          </ul>
+      </p>
+
+       </article>
+       </a>
+       <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/intrinsic-stains-toothiq-384.jpg') }}" >
+      <h3>تصبغات الأسنان الداخلية</h3>
+        <p>
+          <ul>
+          <li>طبقة مرئية من الصبغة على الأسنان</li>
+          <li>بقع بنية على السطح الخارجى </li>
+           <li>حفر و شقوق بيضاء و بنية على سطح السن</li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/primary-occlusal-trauma-toothiq-384.jpg') }}">
+      <h3>الصدمة الإطباقية الأولية</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li></li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      <a href="/booking">
+    <article class="card">
+      <img loading="lazy"  src="{{ url_for('static', filename='images/malocclusion-toothiq-384.jpg') }}" >
+      <h3>إطباق الأسنان</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      </section>
+<!---------->
+  <section class="card-row">
+    <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/missing-teeth-toothiq-384.jpg') }}"   >
+      <h3>الأسنان المفقودة</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      <a href="/booking">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/necrotic-teeth-toothiq-384.jpg') }}"  >
+      <h3>الأسنان الميتة</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      <a href="/booking">
+      <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/dry-socket-toothiq-384.jpg') }}">
+      <h3>إالتهاب تجويف الأسنان</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      <a href="/booking">
+    <article class="card">
+      <img loading="lazy"  src="{{ url_for('static', filename='images/deep-pits-fissures-in-teeth-toothiq-384.jpg') }}" >
+      <h3>حفر وشقوق عميقة</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+      </a>
+      </section>
+<!---------->
+  <section class="card-row">
+
+      </section>
+<!---------->
+  <section class="card-row">
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/cysts-and-tumors-of-the-jaws-toothiq-384.jpg') }}"    >
+      <h3>أورام الفك والخراجات</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/failing-restorations-toothiq-384.jpg') }}"   >
+      <h3>ترميم أسنان غير ناجح</h3>
+        <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </article>
+    <article class="card">
+      <img loading="lazy" src="{{ url_for('static', filename='images/cracked-teeth-toothiq-384.jpg') }}" >
+      <h3>تشقق الأسنان</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+       </article>
+    <article class="card">
+      <img loading="lazy"  src="{{ url_for('static', filename='images/abfractions-and-abrasions-toothiq-384.jpg') }}" >
+      <h3>فقدان سـن غير تسويسي</h3>
+         <p>
+          <ul>
+          <li></li>
+          <li> </li>
+           <li></li>
+          </ul>
+      </p>
+      </section>
+</main>
+
+<main>
+<div>
+
+<button class="btn btn-primary">
+<a href="/chat">تقدر تكلم البوت من هنا</a>
+</button>
+</div>
+</main>
+</div>
+{% endblock content %}
