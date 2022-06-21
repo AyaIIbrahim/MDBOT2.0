@@ -25,8 +25,6 @@ import logging
 
 app = Flask(__name__)
 
-logging.basicConfig(filename='record.log', level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
-
 # Some Definitions
 app.config['SECRET_KEY'] = '4f9a5c9c0b0e66722f11b04bbfb4949f'
 app.config["UPLOAD_FOLDER"] = os.getcwd() + "/static/images/user_upload"
@@ -77,10 +75,6 @@ def appointment():
             diseases = cur.fetchall()
             return render_template('booking.html',diseases=diseases)
         
-     #log   
-     app.logger.info('Info level log')
-     app.logger.warning('Warning level log')  
-     
 @app.route('/my_appointments')
 def appointments():
     return render_template('my_appointments.html')
@@ -461,6 +455,7 @@ classes = pickle.load(open("classes.pkl", "rb"))
 
 app.secret_key = 'chatsecret'
 
+responsed_once = []
 
 @app.route("/chat")
 def chat_home():
@@ -469,8 +464,9 @@ def chat_home():
 
     # db.session.add(user)
     # db.session.commit()
-
+    responsed_once.clear()
     return render_template("chatbot_index.html")
+
 
 
 @app.route("/get", methods=["POST"])
@@ -528,9 +524,16 @@ def predict_class(sentence, model):
         return_list.append({"intent": classes[r[0]], "probability": str(r[1])})
     return return_list
 
+DENT_SPECIALIZATIONS = ['Periodontics', 'Oral Medicine', 'Endodontics', 'Prosthodontics', 'Pediatric dentistry', 'Veterinary dentistry', 'Geriatric dentistry', 'Orthodontics', 'dentofacial orthopedics', 'dentofacial orthopedics']
 
 def getResponse(ints, intents_json):
     tag = ints[0]["intent"]
+    
+    if tag in DENT_SPECIALIZATIONS and tag not in responsed_once:
+        responsed_once.append(tag)
+        result = random.choice([" علشان نتأكد اكتر, ممكن تقولي اعراض تانية؟" , "عشان اقدر اساعدك اكتر, ممكن تقولي اعراض تانية؟"])
+        return result
+        
     list_of_intents = intents_json["intents"]
     for i in list_of_intents:
         if i["tag"] == tag:
