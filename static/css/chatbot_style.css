@@ -63,7 +63,7 @@ h3 {
     border:none;
     background-color: transparent;
     background-clip: padding-box;
-    border-bottom: 1px solid #7c798c;
+    border-bottom: 1px solid #091751;
     box-shadow: none;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
@@ -101,7 +101,7 @@ button, input, optgroup, select, textarea {
 #chatbox {
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 55%;
     min-height: 70px;
     margin-top: 60px;
     padding: 10px 10px 15px;
@@ -132,10 +132,11 @@ button, input, optgroup, select, textarea {
 .userText {
     color: #404040;
     font-family: monospace;
-    font-size: 17px;
+    font-size: 15px;
     text-align: right !important;
     line-height: 30px;
     margin: 5px;
+    padding-bottom: 10px
 }
 
 .userText span {
@@ -147,10 +148,11 @@ button, input, optgroup, select, textarea {
 .botText {
     color: #404040;
     font-family: monospace;
-    font-size: 17px;
+    font-size: 15px;
     text-align: left;
     line-height: 30px;
     margin: 5px;
+    padding-bottom: 10px
 }
 
 .botText span {
