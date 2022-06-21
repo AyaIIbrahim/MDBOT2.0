@@ -65,14 +65,19 @@ __________________________________________
 
 1.    Use any Python IDE (PyCharm, Spyder, Visual Studio Code) to open the project
 
-2.    run index.py  
 
+2.    run train.py    
       if you don't have a Python IDE installed, open cmd and run 
       ```   
-      $ python3 index.py  
+      $ python3 train.py  
       ```  
-3.    Mostly, it will be running on server  http://127.0.0.1:5000/
+
+3.    run index.py  
+
+     
+4.    Mostly, it will be running on server  http://127.0.0.1:5000/
 
       The frontend connects to the backend using a local IP address. The default is set to 127.0.0.1:5000
 
-4.    type  http://127.0.0.1:5000/ in the browser and everthing should be working fine
+
+5.    type  http://127.0.0.1:5000/ in the browser and everthing should be working fine
