@@ -81,7 +81,7 @@ def appointment():
 
     con = sqlite3.connect("mydatabase.db")
     cur = con.cursor()
-    spec = str(request.form.get('doctors'))
+    spec = matched_specialist[0]
     query_string = """SELECT firstName,lastName FROM user WHERE specialization=?"""
     cur.execute(query_string, (spec,))
     doctors = cur.fetchall()
@@ -90,7 +90,7 @@ def appointment():
         return render_template('booking.html',doctors=doctors, specialist=matched_specialist)
     else:
         flash(f'Sorry no available doctor right now!','danger')        
-    return redirect(url_for('home'))
+    return render_template('booking.html')
 
     #log   
     app.logger.info('Info level log')
