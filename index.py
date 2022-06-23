@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for,flash,redirect,request,session, escape
+from flask import Flask, render_template, url_for, flash, redirect, request, session, escape, jsonify
 from forms import RegistrationForm, LoginForm
 import pandas as pd
 import sqlite3
@@ -37,47 +37,70 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'webp', 'tiff', 'tif', 'bmp'])
 def home():
     return render_template('front_index.html')
 
+
 @app.route('/medicalDomain', methods=['POST','GET'])
 def chooseMedicalDom():
     return render_template('medicalDomain.html')
-    
+
+
 @app.route('/info')
 def info():
     return render_template('info.html')
 
+
 def allowed_file(filename): 
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS 
-        
+
+
 @app.route('/dent', methods=['POST','GET'])
 def dent():        
     if request.method == 'POST': 
-            file = request.files['file'] 
+            file=request.files['file']
             
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename) 
                 
                 if filename in os.listdir(app.config['UPLOAD_FOLDER']):
-                    pred = teeth_predict.predict(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    return render_template('dent.html', prediction = pred)
+                    pred1 = teeth_predict.predict(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    pred2= teeth_predict.model2(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    path = pred2.save()
+                    limit = len(pred2.pandas().xyxy[0].to_json())
+                    return render_template('dent.html', pred1=pred1, limit=limit, path=os.path.join(path, filename))
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
-                pred = teeth_predict.predict(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                return render_template('dent.html', prediction = pred)
+                pred1 = teeth_predict.predict(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                pred2 = teeth_predict.model2(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                path = pred2.save()
+                limit = len(pred2.pandas().xyxy[0].to_json())
+                return render_template('dent.html', pred1=pred1, limit=limit, path=os.path.join(path, filename))
         
     return render_template('dent.html')
 
-@app.route('/booking', methods=['GET'])
+
+@app.route('/booking', methods=['POST', 'GET'])
 def appointment():
-     if request.method == 'GET' and 'email' in session:
-        if session['accType'] == 'patient':
-            con = sqlite3.connect("mydatabase.db")
-            cur = con.cursor()
-            cur.execute("SELECT disease FROM diseases")
-            diseases = cur.fetchall()
-            return render_template('booking.html',diseases=diseases)
-        
+
+    con = sqlite3.connect("mydatabase.db")
+    cur = con.cursor()
+    spec = str(request.form.get('doctors'))
+    query_string = """SELECT firstName,lastName FROM user WHERE specialization=?"""
+    cur.execute(query_string, (spec,))
+    doctors = cur.fetchall()
+    con.close()
+    if len(doctors) >= 0:
+        return render_template('booking.html',doctors=doctors, specialist=matched_specialist)
+    else:
+        flash(f'Sorry no available doctor right now!','danger')        
+    return redirect(url_for('home'))
+
+    #log   
+    app.logger.info('Info level log')
+    app.logger.warning('Warning level log')  
+ 
+     
 @app.route('/my_appointments')
 def appointments():
     return render_template('my_appointments.html')
+
 
 @app.route('/symps', methods=['POST','GET'])
 def symptoms():
@@ -98,7 +121,8 @@ def symptoms():
         return render_template('symps.html', symptom = symptom)
     else:
         return redirect(url_for('info'))
-    
+
+
 Q1=Q2=[]
 @app.route('/questions', methods=['POST','GET'])
 def questions():
@@ -119,6 +143,7 @@ def questions():
     else:
         return render_template('questions.html',symptoms=symptoms,myQuestions=myQuestions1)
     
+
 
 @app.route('/choose', methods=['POST','GET'])
 def chooseOne():
@@ -146,9 +171,12 @@ def chooseOne():
     else:
         return render_template('questions.html',symptoms=symptoms,myQuestions=myQuestions1)
 
+matched_specialist = []
+
 
 @app.route('/diagnosis/<count>', methods=['POST','GET'])
 def diagnosis(count):
+    matched_specialist.clear()
     if request.method == 'GET':
         return redirect(url_for('info'))
     goodAnswer = []
@@ -198,10 +226,13 @@ def diagnosis(count):
             finalDisSyms.append(diseasesSyms[i])
             diseasesInfo.append(getDiseaseData(diseases[i]))
             specialist.append(getSpecialist(diseasesInfo[i][4]))
+            if getSpecialist(diseasesInfo[i][4]) not in matched_specialist:
+                matched_specialist.append(getSpecialist(diseasesInfo[i][4]))
             diseasesTips.append(getTips(diseases[i]))
             counter = counter + percent[i]
             if counter > 75.0:
                 break
+        
         return render_template('diagnosis.html',diseases=finalDiseases,percent=finalPercent,
                 symptoms=symptoms,diseasesInfo=diseasesInfo,diseasesSyms=finalDisSyms,diseasesTips=diseasesTips,specialist=specialist)
     else:
@@ -246,6 +277,7 @@ def getDiseaseData(disease):
         return diseases[0]
     return []
 
+
 def getAllSyms(disease):
     con = sqlite3.connect("mydatabase.db")
     cur = con.cursor()
@@ -259,6 +291,7 @@ def getAllSyms(disease):
             result.append(s[0])
         return result
     return []
+
 
 def getTips(disease):
     con = sqlite3.connect("mydatabase.db")
@@ -281,6 +314,7 @@ def getPercent(mySymptoms,diseaseSymptoms):
         return 0
     else :
         return int((counter * 100) / len(diseaseSymptoms))
+
 
 def getSpecialist(organ):
     con = sqlite3.connect("mydatabase.db")
